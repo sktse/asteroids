@@ -1,0 +1,402 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.stephentse.asteroids.gui.GameBoard
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/gameBoard" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutTopBar">
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/layoutCenter"></FrameLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutLifeBar"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp">
+
+                    <FrameLayout
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/bright_green"
+                        android:id="@+id/layoutLife1"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/bright_green"
+                        android:id="@+id/layoutLife2" />
+
+                    <FrameLayout
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/bright_green"
+                        android:id="@+id/layoutLife3" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="0"
+                    android:id="@+id/textViewScore"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:typeface="monospace"
+                    android:layout_toLeftOf="@+id/textViewMultiplier"
+                    android:paddingBottom="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="x1.0"
+                    android:id="@+id/textViewMultiplier"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:typeface="monospace"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/white"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="3dp"
+                    android:textColor="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutLifeBar"
+                    android:layout_alignRight="@+id/layoutLifeBar"
+                    android:id="@+id/layoutLifeBarBottomLine">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.3"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_weight="0.7"
+                        android:background="@color/tutorial_line"></FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="2dp"
+                    android:layout_height="fill_parent"
+                    android:layout_toRightOf="@+id/layoutLifeBar"
+                    android:id="@+id/layoutLifeBarRightLine"
+                    android:layout_alignBottom="@+id/layoutLifeBarBottomLine">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="2dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:background="@color/tutorial_line"></FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutScoreLine"
+                    android:layout_below="@+id/textViewScore"
+                    android:layout_alignRight="@+id/textViewScore"
+                    android:layout_toRightOf="@+id/layoutLifeBar">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_weight="0.6"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_weight="0.4"
+                        android:background="@color/tutorial_line"></FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewMultiplier"
+                    android:layout_alignRight="@+id/textViewMultiplier"
+                    android:layout_alignLeft="@+id/textViewMultiplier"
+                    android:id="@+id/layoutMultiplierLine">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.05"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_weight="0.9"
+                        android:background="@color/tutorial_line"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.05"></FrameLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutLifeBarBottomLine"
+                    android:layout_alignRight="@+id/layoutLifeBarRightLine"
+                    android:id="@+id/layoutLifeBarPointerLine">
+
+                    <FrameLayout
+                        android:layout_width="2dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/tutorial_line"></FrameLayout>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/layoutScoreLine"
+                    android:layout_alignRight="@+id/layoutScoreLine"
+                    android:layout_alignLeft="@+id/layoutScoreLine"
+                    android:id="@+id/layoutScorePointerLine"
+                    android:layout_alignBottom="@+id/textViewTutorialLives">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.6"></FrameLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.4">
+
+                        <FrameLayout
+                            android:layout_width="2dp"
+                            android:layout_height="fill_parent"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/tutorial_line"></FrameLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/layoutMultiplierPointerLine"
+                    android:layout_below="@+id/layoutMultiplierLine"
+                    android:layout_alignLeft="@+id/layoutMultiplierLine"
+                    android:layout_alignRight="@+id/layoutMultiplierLine"
+                    android:layout_alignBottom="@+id/textViewTutorialScore">
+
+                    <FrameLayout
+                        android:layout_width="2dp"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/tutorial_line"></FrameLayout>
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/layoutMultiplierPointerLine"
+                    android:layout_below="@+id/layoutMultiplierPointerLine"
+                    android:layout_alignRight="@+id/layoutMultiplierPointerLine"
+                    android:id="@+id/layoutMultiplierPointerExtensionLine">
+
+                    <FrameLayout
+                        android:layout_width="2dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/tutorial_line"></FrameLayout>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/tutorial_lives"
+                    android:id="@+id/textViewTutorialLives"
+                    android:layout_below="@+id/layoutLifeBarPointerLine"
+                    android:layout_marginLeft="20dp"
+                    android:layout_alignRight="@+id/layoutCenter"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/tutorial_score"
+                    android:id="@+id/textViewTutorialScore"
+                    android:layout_below="@+id/layoutScorePointerLine"
+                    android:layout_alignRight="@+id/layoutScoreLine"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/tutorial_multiplier"
+                    android:id="@+id/textViewTutorialMultiplier"
+                    android:layout_below="@+id/layoutMultiplierPointerExtensionLine"
+                    android:layout_alignRight="@+id/layoutMultiplierPointerLine"
+                    android:layout_marginTop="5dp"
+                    android:gravity="right"
+                    android:layout_alignLeft="@+id/layoutScoreLine"
+                    android:layout_marginRight="10dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/layoutPlayerDetails">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.8"></FrameLayout>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.1">
+
+                        <FrameLayout
+                            android:layout_width="60dp"
+                            android:layout_height="2dp"
+                            android:background="@color/tutorial_line"
+                            android:layout_gravity="center"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/layoutBottomPlayerLine"></FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="2dp"
+                            android:layout_height="10dp"
+                            android:background="@color/tutorial_line"
+                            android:layout_alignBottom="@+id/layoutBottomPlayerLine"
+                            android:layout_toLeftOf="@+id/layoutBottomPlayerLine"
+                            android:id="@+id/layoutLeftPlayerLine"></FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="2dp"
+                            android:layout_height="10dp"
+                            android:id="@+id/layoutRightPlayerLine"
+                            android:layout_toRightOf="@+id/layoutBottomPlayerLine"
+                            android:layout_alignBottom="@+id/layoutBottomPlayerLine"
+                            android:background="@color/tutorial_line"></FrameLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.1">
+
+                        <FrameLayout
+                            android:layout_width="2dp"
+                            android:layout_height="5dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/tutorial_line"
+                            android:id="@+id/layoutPlayerPointerLine"></FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="@string/tutorial_player"
+                            android:id="@+id/textViewTutorialPlayer"
+                            android:gravity="center"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@+id/layoutPlayerPointerLine" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/layoutAsteroidsDetails">
+
+                    <FrameLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="635px"
+                        android:id="@+id/layoutAsteroidTopPadding"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/layoutAsteroidTopPadding"
+                        android:background="@color/tutorial_line"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/layoutAsteroidTutorialLine"></FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="2dp"
+                        android:layout_height="5dp"
+                        android:layout_below="@+id/layoutAsteroidTutorialLine"
+                        android:background="@color/tutorial_line"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/layoutAsteroidPointerLine"></FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/tutorial_asteroids"
+                        android:id="@+id/textViewTutorialAsteroid"
+                        android:layout_below="@+id/layoutAsteroidPointerLine"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

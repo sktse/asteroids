@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Phase Asteroids</string>
+    <string name="app_title">PHASE ASTEROIDS</string>
+    <string name="multiplier_format">x%.1f</string>
+    <string name="tutorial_lives">This is the number of lives you have remaining</string>
+    <string name="tutorial_score">This is your total score</string>
+    <string name="tutorial_multiplier">This is your score multiplier\nIt increases every time you destroy an asteroid</string>
+    <string name="tutorial_player">This is your ship\nPress + hold to move around and fire at asteroids</string>
+    <string name="tutorial_asteroids">Destroy the asteroids for points. A colliding asteroid will destroy you if are pressing + holding your ship.\nOtherwise, asteroids will leave you unharmed and pass through you.</string>
+</resources>

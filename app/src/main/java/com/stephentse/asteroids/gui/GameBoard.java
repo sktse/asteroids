@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.stephentse.asteroids.AsteroidsApplication;
 import com.stephentse.asteroids.R;
@@ -59,6 +60,7 @@ public class GameBoard extends View {
     private OnGameEventListener _gameEventListener;
 
     private Matrix m = null;
+    private boolean _isLayoutComplete;
 
     public GameBoard(Context context, AttributeSet aSet) {
         super(context, aSet);
@@ -78,6 +80,16 @@ public class GameBoard extends View {
         _gameEventListener = null;
         _collisionStrategyFactory = null;
         _translationStrategyFactory = null;
+
+        _isLayoutComplete = false;
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (getWidth() > 0 && getHeight() > 0) {
+                    _isLayoutComplete = true;
+                }
+            }
+        });
     }
 
     public synchronized void resetStarField() {
@@ -186,6 +198,10 @@ public class GameBoard extends View {
     }
 
     public synchronized void tick() {
+        if (!_isLayoutComplete) {
+            return;
+        }
+
         AsteroidsApplication.getInstance().getGameStatus().incrementTickCount();
         TranslationStrategyFactory translationStrategyFactory = getTranslationStrategyFactory();
         CollisionStrategyFactory collisionStrategyFactory = getCollisionStrategyFactory();

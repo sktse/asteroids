@@ -3,7 +3,6 @@ package com.stephentse.asteroids.model.sprites.fx;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +127,6 @@ public class PlayerExplosionSprite implements ICosmeticSprite {
     @Override
     public void setBitmap(Bitmap bitmap, boolean setBounds) {
         _bitmap = bitmap;
-        Log.v("Stephen", "Bitmap dimensions (" + _bitmap.getWidth() + "," + _bitmap.getHeight() + ")");
         if (setBounds) {
             //set bounds will generate the tiles
             setBounds(new Rect(0,0, bitmap.getWidth(), bitmap.getHeight()));

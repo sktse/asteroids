@@ -9,4 +9,6 @@
     <string name="tutorial_multiplier">This is your score multiplier\nIt increases every time you destroy an asteroid</string>
     <string name="tutorial_player">This is your ship\nPress + hold to move around and fire at asteroids</string>
     <string name="tutorial_asteroids">Destroy the asteroids for points. A colliding asteroid will destroy you if are pressing + holding your ship.\nOtherwise, asteroids will leave you unharmed and pass through you.</string>
+    <string name="high_score_connection_error">Failed to connect! Please try again.</string>
+    <string name="high_score_empty">Please enter your name!</string>
 </resources>

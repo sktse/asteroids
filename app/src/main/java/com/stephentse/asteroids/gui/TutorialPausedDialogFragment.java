@@ -47,7 +47,7 @@ public class TutorialPausedDialogFragment extends DialogFragment {
         Typeface basicTypeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.BASIC, getActivity().getAssets());
 
         View dialogView = inflater.inflate(R.layout.dialog_tutorial_pause, null);
-        TextView titleTextView = (TextView)dialogView.findViewById(R.id.textViewTitle);
+        TextView titleTextView = (TextView)dialogView.findViewById(R.id.textViewGameOverTitle);
         titleTextView.setTypeface(spvTypeface);
 
         Button quitButton = (Button)dialogView.findViewById(R.id.buttonQuit);

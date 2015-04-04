@@ -18,4 +18,10 @@ public class SettingsWrapper {
             settings.setHighScore(highScore);
         }
     }
+
+    public static boolean isHighScore(long highScore) {
+        long currentHighScore = getHighScore();
+
+        return highScore > currentHighScore;
+    }
 }

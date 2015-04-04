@@ -16,7 +16,6 @@ import com.stephentse.asteroids.gui.GameEvent;
 import com.stephentse.asteroids.gui.GameOverDialogFragment;
 import com.stephentse.asteroids.gui.OnGameEventListener;
 import com.stephentse.asteroids.gui.PausedDialogFragment;
-import com.stephentse.asteroids.gui.WinnerDialogFragment;
 import com.stephentse.asteroids.model.SpriteFactory;
 import com.stephentse.asteroids.model.commands.CreateAsteroidCommand;
 import com.stephentse.asteroids.model.sprites.Asteroid;
@@ -85,14 +84,19 @@ public class GameActivity extends FragmentActivity {
                             _multiplierTextView.setText(String.format(multiplierString, _multiplier));
                             _frame.postDelayed(playerRespawn, PLAYER_RESPAWN_DELAY);
                         } else {
-                            SettingsWrapper.setIfHighScore(_score);
-
-                            GameOverDialogFragment fragment = new GameOverDialogFragment();
+                            AsteroidsApplication.getInstance().getGameStatus().pauseGame();
+                            String name = AsteroidsApplication.getSettings().getName();
+                            final GameOverDialogFragment fragment = new GameOverDialogFragment();
+                            fragment.enableGameOverDialog();
                             fragment.setScore(_score);
+                            fragment.setName(name);
                             fragment.setOnButtonClickListener(new GameOverDialogFragment.OnButtonClickListener() {
                                 @Override
                                 public void onClick() {
                                     //Ok clicked
+                                    SettingsWrapper.setIfHighScore(_score);
+                                    String newName = fragment.getName();
+                                    AsteroidsApplication.getSettings().setName(newName);
                                     finish();
                                 }
                             });
@@ -100,14 +104,19 @@ public class GameActivity extends FragmentActivity {
                         }
                         break;
                     case GameEvent.GAME_COMPLETE:
-                        SettingsWrapper.setIfHighScore(_score);
-
-                        WinnerDialogFragment fragment = new WinnerDialogFragment();
+                        AsteroidsApplication.getInstance().getGameStatus().pauseGame();
+                        String name = AsteroidsApplication.getSettings().getName();
+                        final GameOverDialogFragment fragment = new GameOverDialogFragment();
+                        fragment.enableWinnerDialog();
                         fragment.setScore(_score);
-                        fragment.setOnButtonClickListener(new WinnerDialogFragment.OnButtonClickListener() {
+                        fragment.setName(name);
+                        fragment.setOnButtonClickListener(new GameOverDialogFragment.OnButtonClickListener() {
                             @Override
                             public void onClick() {
                                 //Ok clicked
+                                SettingsWrapper.setIfHighScore(_score);
+                                String newName = fragment.getName();
+                                AsteroidsApplication.getSettings().setName(newName);
                                 finish();
                             }
                         });

@@ -7,16 +7,35 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dark_green"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:id="@+id/layoutWinner">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="YOU WIN"
+            android:id="@+id/textViewWinnerTitle"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/dark_red"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:paddingBottom="20dp"
+        android:id="@+id/layoutGameOver">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="GAME OVER"
-            android:id="@+id/textViewTitle"
+            android:id="@+id/textViewGameOverTitle"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
@@ -24,8 +43,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="New High Score!"
+        android:id="@+id/textViewHighScore"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Total score:"
+        android:text="Total score"
         android:id="@+id/textViewSubtitle"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp" />
@@ -37,4 +65,61 @@
         android:text="0"
         android:id="@+id/textViewScore"
         android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Name"
+        android:id="@+id/textViewName"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/layoutNameAndButton">
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/editTextName"
+            android:gravity="center_horizontal|bottom"
+            android:inputType="text|textNoSuggestions"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
+            android:maxLength="7" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/layoutButton">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/buttonUpload"
+                android:background="@drawable/upload_button_selector" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/progressBarUpload"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imageViewCheck"
+                android:src="@drawable/button_check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/app_title"
-                android:id="@+id/textViewTitle"
+                android:id="@+id/textViewGameOverTitle"
                 android:gravity="center_horizontal"
                 android:background="@color/dark_blue"
                 android:textColor="@android:color/white"
@@ -139,6 +139,18 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="0"
                     android:id="@+id/textViewHighScore"
+                    android:gravity="center"
+                    android:background="@color/darkest_gray"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="1dp"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="YOU"
+                    android:id="@+id/textViewName"
                     android:gravity="center"
                     android:background="@color/darkest_gray"
                     android:paddingBottom="4dp"

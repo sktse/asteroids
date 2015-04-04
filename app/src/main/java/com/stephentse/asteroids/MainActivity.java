@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.stephentse.asteroids.gui.GameBoard;
 import com.stephentse.asteroids.model.SpriteFactory;
 import com.stephentse.asteroids.model.commands.CreateAsteroidCommand;
+import com.stephentse.asteroids.system.Settings;
 import com.stephentse.asteroids.system.SettingsWrapper;
 import com.stephentse.asteroids.util.TypefaceFactory;
 
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
         Typeface basicTypeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.BASIC, getAssets());
         Typeface squareTypeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.SQUARE, getAssets());
 
-        TextView titleTextView = (TextView) findViewById(R.id.textViewTitle);
+        TextView titleTextView = (TextView) findViewById(R.id.textViewGameOverTitle);
         titleTextView.setTypeface(forcedSquareTypeface);
 
         Button startButton = (Button)findViewById(R.id.buttonStart);
@@ -70,6 +71,12 @@ public class MainActivity extends Activity {
         highScoreTextView.setTypeface(squareTypeface);
         highScoreTextView.setText(Long.toString(highScore));
 
+        Settings settings = AsteroidsApplication.getSettings();
+        String name = settings.getName();
+        TextView nameTextView = (TextView)findViewById(R.id.textViewName);
+        nameTextView.setTypeface(squareTypeface);
+        nameTextView.setText(name);
+
         initializeAsteroids();
     }
 
@@ -94,10 +101,14 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        //update the high score when we return to this activity
+        //update the high score and name when we return to this activity
         long highScore = SettingsWrapper.getHighScore();
         TextView highScoreTextView = (TextView)findViewById(R.id.textViewHighScore);
         highScoreTextView.setText(Long.toString(highScore));
+
+        String name = AsteroidsApplication.getSettings().getName();
+        TextView nameTextView = (TextView)findViewById(R.id.textViewName);
+        nameTextView.setText(name);
 
         _frame.removeCallbacks(frameUpdate);
         _frame.postDelayed(frameUpdate, FRAME_RATE);

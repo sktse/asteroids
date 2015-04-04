@@ -48,7 +48,7 @@ public class PausedDialogFragment extends DialogFragment {
         Typeface basicTypeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.BASIC, getActivity().getAssets());
 
         View dialogView = inflater.inflate(R.layout.dialog_pause, null);
-        TextView titleTextView = (TextView)dialogView.findViewById(R.id.textViewTitle);
+        TextView titleTextView = (TextView)dialogView.findViewById(R.id.textViewGameOverTitle);
         titleTextView.setTypeface(spvTypeface);
 
         Button resetButton = (Button)dialogView.findViewById(R.id.buttonReset);

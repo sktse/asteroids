@@ -25,7 +25,7 @@ public class AsteroidsApplication extends Application {
         super.onCreate();
 
         String crashlyticsKey = CrashlyticsWrapper.getKey(getPackageManager(), getPackageName());
-        if (crashlyticsKey != null && !crashlyticsKey.isEmpty()) {
+        if (crashlyticsKey != null && !crashlyticsKey.isEmpty() && !BuildConfig.DEBUG) {
             //if we have a crashlytics key, then initialize it
             //when Crashlytics starts, it will log an informational under the 'Fabric' key
             Fabric.with(this, new Crashlytics());

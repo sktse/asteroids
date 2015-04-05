@@ -8,6 +8,7 @@
     <color name="light_blue">#ff42d7f4</color>
     <color name="darkest_gray">#ff282828</color>
     <color name="bright_green">#ff0fff00</color>
+    <color name="purple">#ff7c31ad</color>
     <color name="tutorial_line">#ffffea00</color>
 
 </resources>

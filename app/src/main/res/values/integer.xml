@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="name_max_length">7</integer>
+    <integer name="high_score_side_row_margins">30</integer>
+    <integer name="high_score_top_row_margins">5</integer>
+    <integer name="number_of_high_scores">10</integer>
 </resources>

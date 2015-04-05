@@ -1,26 +1,31 @@
 package com.stephentse.asteroids;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.stephentse.asteroids.gui.GameBoard;
+import com.stephentse.asteroids.gui.HighScoresDialogFragment;
 import com.stephentse.asteroids.model.SpriteFactory;
 import com.stephentse.asteroids.model.commands.CreateAsteroidCommand;
 import com.stephentse.asteroids.system.Settings;
 import com.stephentse.asteroids.system.SettingsWrapper;
 import com.stephentse.asteroids.util.TypefaceFactory;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
+    private static final String HIGH_SCORE_FRAGMENT_NAME = "HIGH_SCORE_FRAGMENT_NAME";
+
     private Handler _frame = new Handler();
+
+    private HighScoresDialogFragment _highScoreDialog;
 
     //Divide the frame by 1000 to calculate how many times per second the screen will update.
     private static final int FRAME_RATE = 20; //50 frames per second
@@ -28,6 +33,8 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
         Typeface forcedSquareTypeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.FORCED_SQUARE, getAssets());
@@ -54,6 +61,25 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button scoreButton = (Button)findViewById(R.id.buttonScore);
+        scoreButton.setTypeface(basicTypeface);
+        scoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _frame.removeCallbacks(frameUpdate);
+
+                _highScoreDialog = new HighScoresDialogFragment();
+                _highScoreDialog.setOnDismissListener(new HighScoresDialogFragment.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        _frame.postDelayed(frameUpdate, FRAME_RATE);
+                    }
+                });
+                _highScoreDialog.show(getFragmentManager(), HIGH_SCORE_FRAGMENT_NAME);
+
             }
         });
 
@@ -110,8 +136,10 @@ public class MainActivity extends Activity {
         TextView nameTextView = (TextView)findViewById(R.id.textViewName);
         nameTextView.setText(name);
 
-        _frame.removeCallbacks(frameUpdate);
-        _frame.postDelayed(frameUpdate, FRAME_RATE);
+        if (!isHighScoreDialogVisible()) {
+            _frame.removeCallbacks(frameUpdate);
+            _frame.postDelayed(frameUpdate, FRAME_RATE);
+        }
     }
 
     @Override
@@ -129,6 +157,10 @@ public class MainActivity extends Activity {
         return size;
     }
 
+    private boolean isHighScoreDialogVisible() {
+        return _highScoreDialog != null && _highScoreDialog.getDialog() != null && _highScoreDialog.getDialog().isShowing();
+    }
+
     private Runnable frameUpdate = new Runnable() {
         @Override
         public synchronized void run() {
@@ -138,7 +170,9 @@ public class MainActivity extends Activity {
             gameBoard.tick();
             gameBoard.invalidate();
 
-            _frame.postDelayed(frameUpdate, FRAME_RATE);
+            if (!isHighScoreDialogVisible()) {
+                _frame.postDelayed(frameUpdate, FRAME_RATE);
+            }
         }
     };
 }

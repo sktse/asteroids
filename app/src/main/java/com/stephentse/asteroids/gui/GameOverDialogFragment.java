@@ -164,8 +164,11 @@ public class GameOverDialogFragment extends DialogFragment {
         TextView nameSubTitleTextView = (TextView)dialogView.findViewById(R.id.textViewName);
         nameSubTitleTextView.setTypeface(_basicTypeface);
 
+        String existingName = AsteroidsApplication.getSettings().getName();
         _nameEditText = (EditText)dialogView.findViewById(R.id.editTextName);
         _nameEditText.setTypeface(_squareTypeface);
+        _nameEditText.setText(existingName);
+        _nameEditText.setSelection(existingName.length());
         _nameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -205,6 +208,11 @@ public class GameOverDialogFragment extends DialogFragment {
         _uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!isNameValid()) {
+                    //if the name is not valid, do not ping the server
+                    return;
+                }
+
                 //disable the ok button on the dialog
                 setUploadProgressViews(UploadProgress.Uploading);
                 final String name = _nameEditText.getText().toString();
@@ -252,6 +260,17 @@ public class GameOverDialogFragment extends DialogFragment {
             nameSubTitleTextView.setVisibility(View.GONE);
             nameAndButtonLayout.setVisibility(View.GONE);
         }
+    }
+
+    private boolean isNameValid() {
+        String name = _nameEditText.getText().toString();
+        if (name.length() == 0) {
+            String emptyNameErrorString = getResources().getString(R.string.high_score_empty);
+            _nameEditText.setError(emptyNameErrorString);
+            return false;
+        }
+
+        return true;
     }
 
     private void setUploadProgressViews(UploadProgress progress) {

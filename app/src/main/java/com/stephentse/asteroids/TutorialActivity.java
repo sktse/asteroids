@@ -1,12 +1,16 @@
 package com.stephentse.asteroids;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.view.Display;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.stephentse.asteroids.gui.GameBoard;
@@ -24,7 +28,10 @@ public class TutorialActivity extends FragmentActivity {
 
     private TextView _scoreTextView;
     private TextView _multiplierTextView;
+    private Bitmap _shipBitmap;
+    private Bitmap _bulletBitmap;
 
+    private boolean _isInitialized = false;
     private long _score;
     private float _multiplier;
 
@@ -38,6 +45,10 @@ public class TutorialActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+
+        _shipBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player30);
+        _bulletBitmap = BitmapFactory.decodeResource(
+                AsteroidsApplication.getInstance().getResources(), R.drawable.bullet);
 
         Typeface typeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.SQUARE, getAssets());
         _scoreTextView = (TextView)findViewById(R.id.textViewScore);
@@ -62,6 +73,9 @@ public class TutorialActivity extends FragmentActivity {
         TextView asteroidTutorialTextView = (TextView)findViewById(R.id.textViewTutorialAsteroid);
         asteroidTutorialTextView.setTypeface(tutorialTypeface);
 
+        TextView shipTutorialTextView = (TextView)findViewById(R.id.textViewTutorialShip);
+        shipTutorialTextView.setTypeface(tutorialTypeface);
+
         final GameBoard gameBoard = (GameBoard)findViewById(R.id.gameBoard);
         gameBoard.setOnGameEventListener(new OnGameEventListener() {
             @Override
@@ -85,13 +99,27 @@ public class TutorialActivity extends FragmentActivity {
                         //asteroids are designed to spawn in a never ending cycle
                         break;
                     default:
-                        throw new IllegalArgumentException("Unrecoginzed GameEvent value: " + event);
+                        throw new IllegalArgumentException("Unrecognized GameEvent value: " + event);
                 }
             }
         });
 
-
-        initializeGame();
+        final View contentView = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        ViewTreeObserver viewTreeObserver = contentView.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //The tutorial overlay is done ahead of time and entirely based on a screen height that
+                //includes the top Android system status bar.
+                //We need to wait until the whole view is laid out so we can measure the correct
+                //spot to load the player ship to fit within the tutorial overlay.
+                if (!_isInitialized) {
+                    //this can be triggered multiple times, but we need to only start the game once
+                    _isInitialized = true;
+                    initializeGame();
+                }
+            }
+        });
     }
 
     @Override
@@ -116,14 +144,20 @@ public class TutorialActivity extends FragmentActivity {
 
     public synchronized void initializeGame() {
         Point dimensions = getDimensions();
-        Point playerPosition = new Point((int)(dimensions.x * 0.5) - 30, (int)(dimensions.y * 0.8) - 30);
+        int playerPositionX = (int)(dimensions.x * 0.5) - (int) (_shipBitmap.getWidth() * 0.5);
+        int playerPositionY = (int)(dimensions.y * 0.9) - (_shipBitmap.getHeight()) - 5;
+        Point playerPosition = new Point(playerPositionX, playerPositionY);
+
         Rect creationBounds = new Rect(0,0,dimensions.x,(int) (dimensions.y * 0.6));
 
-        CreateCyclingAsteroidCommand asteroidCommand = new CreateCyclingAsteroidCommand(100, SpriteFactory.AsteroidSize.SIZE_100, new Point(50, 400), new Point(5, 0));
+        Bitmap asteroidBitmap = SpriteFactory.getAsteroidBitmap(SpriteFactory.AsteroidSize.SIZE_100);
+        int asteroidPositionX = (int)(dimensions.x * 0.5);
+        int asteroidPositionY = (int)(dimensions.y * 0.5) - asteroidBitmap.getHeight() - 10;
+        CreateCyclingAsteroidCommand asteroidCommand = new CreateCyclingAsteroidCommand(100, SpriteFactory.AsteroidSize.SIZE_100, new Point(asteroidPositionX, asteroidPositionY), new Point(5, 0));
 
         GameBoard gameBoard = (GameBoard)findViewById(R.id.gameBoard);
         gameBoard.resetStarField();
-        gameBoard.initializeGame(playerPosition, 15, 10, 20, asteroidCommand, creationBounds);
+        gameBoard.initializeGame(playerPosition, 15, 10, 20, asteroidCommand, creationBounds, _shipBitmap, _bulletBitmap);
 
         _score = 0;
         _multiplier = 1;
@@ -162,14 +196,6 @@ public class TutorialActivity extends FragmentActivity {
         AsteroidsApplication.getInstance().getGameStatus().pauseGame();
     }
 
-    private Point getDimensions() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-
-        return size;
-    }
-
     private Runnable frameUpdate = new Runnable() {
         @Override
         public synchronized void run() {
@@ -189,13 +215,22 @@ public class TutorialActivity extends FragmentActivity {
         @Override
         public synchronized void run() {
             _frame.removeCallbacks(playerRespawn);
+
             Point dimensions = getDimensions();
-            Point playerPosition = new Point((int)(dimensions.x * 0.5) - 30, (int)(dimensions.y * 0.8) - 30);
+            int playerPositionX = (int)(dimensions.x * 0.5) - (int) (_shipBitmap.getWidth() * 0.5);
+            int playerPositionY = (int)(dimensions.y * 0.9) - (_shipBitmap.getHeight()) - 5;
+            Point playerPosition = new Point(playerPositionX, playerPositionY);
 
             GameBoard gameBoard = (GameBoard)findViewById(R.id.gameBoard);
-            gameBoard.continueGame(playerPosition, 15, 10, 20);
+            gameBoard.continueGame(playerPosition, 15, 10, 20, _shipBitmap, _bulletBitmap);
         }
     };
+
+    private Point getDimensions() {
+        //this will only work if the views have already been laid out
+        View contentView = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        return new Point(contentView.getWidth(), contentView.getHeight());
+    }
 
     @Override
     public void onBackPressed() {

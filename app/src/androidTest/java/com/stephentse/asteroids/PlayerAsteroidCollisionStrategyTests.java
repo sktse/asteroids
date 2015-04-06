@@ -3,7 +3,6 @@ package com.stephentse.asteroids;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-import com.stephentse.asteroids.interactions.collision.BulletAsteroidCollisionStrategy;
 import com.stephentse.asteroids.interactions.collision.PlayerAsteroidCollisionStrategy;
 import com.stephentse.asteroids.model.sprites.Asteroid;
 import com.stephentse.asteroids.model.sprites.Player;
@@ -12,12 +11,14 @@ import junit.framework.TestCase;
 
 public class PlayerAsteroidCollisionStrategyTests extends TestCase {
 
-    private Rect _bounds;
+    private Rect _hitBox;
+    private Rect _touchBox;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        _bounds = new Rect(0, 0, 10, 10);
+        _hitBox = new Rect(0, 0, 10, 10);
+        _touchBox = new Rect(0, 15, 10, 25);
     }
 
     public void testNoIntersection() {
@@ -121,11 +122,24 @@ public class PlayerAsteroidCollisionStrategyTests extends TestCase {
         assertFalse("Expected player and asteroid to not collide", intersect);
     }
 
+    public void testOnlyTouchBoxCollision() {
+        Player player = getPlayer(100, 100, 3);
+        Asteroid asteroid = getAsteroid(100, 120, 5, 5);
+
+        boolean touchBoxIntersection = player.getAbsoluteTouchBox().intersect(asteroid.getAbsoluteBounds());
+        assertTrue("Expecting player touch box and asteroid to intersect", touchBoxIntersection);
+
+        PlayerAsteroidCollisionStrategy strategy = new PlayerAsteroidCollisionStrategy(1000, 1000);
+        boolean intersect = strategy.intersect(player, asteroid);
+        assertFalse("Expected player and asteroid to not collide", intersect);
+    }
+
     private Player getPlayer(int x, int y, int hitPoints) {
         Player player = new Player();
         player.setPosition(x, y);
         player.setHitPoints(hitPoints);
-        player.setBounds(_bounds);
+        player.setHitBox(_hitBox);
+        player.setTouchBox(_touchBox);
         player.setEnabled(true);
 
         return player;
@@ -135,7 +149,7 @@ public class PlayerAsteroidCollisionStrategyTests extends TestCase {
         Asteroid asteroid = new Asteroid();
         asteroid.setPosition(x, y);
         asteroid.setVelocity(velocityX, velocityY);
-        asteroid.setBounds(_bounds);
+        asteroid.setBounds(_hitBox);
         return asteroid;
     }
 

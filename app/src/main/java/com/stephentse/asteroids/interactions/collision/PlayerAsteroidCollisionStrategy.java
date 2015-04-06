@@ -34,7 +34,7 @@ public class PlayerAsteroidCollisionStrategy implements ICollisionStrategy {
             return false;
         }
 
-        Rect playerAbsoluteBounds = _player.getAbsoluteBounds();
+        Rect playerAbsoluteBounds = _player.getAbsoluteHitBox();
         List<Rect> asteroidAbsoluteBounds = CollisionUtilities.expandClippedBounds(_asteroid, _maxWidth, _maxHeight);
 
         for (int i = 0; i < asteroidAbsoluteBounds.size(); i++) {

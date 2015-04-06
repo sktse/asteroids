@@ -91,8 +91,8 @@ public class TranslationUtilities {
                         listener.onGameEvent(GameEvent.PLAYER_REKTD, player);
                     }
 
-                    Point playerCenterPoint = new Point(player.getAbsoluteBounds().centerX(),
-                                                        player.getAbsoluteBounds().centerY());
+                    Point playerCenterPoint = new Point(player.getAbsoluteHitBox().centerX(),
+                                                        player.getAbsoluteHitBox().centerY());
                     PlayerExplosionSprite explosionSprite = SpriteFactory.createPlayerExplosionSprite(playerCenterPoint);
                     cosmeticSprites.put(explosionSprite.getId(), explosionSprite);
                 }

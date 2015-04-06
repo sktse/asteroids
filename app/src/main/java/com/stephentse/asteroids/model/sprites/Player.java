@@ -11,6 +11,8 @@ public class Player implements IDamageableSprite {
     private int _rotation;
     private Point _position;
     private Rect _bounds;
+    private Rect _hitBox;
+    private Rect _touchBox;
     private Bitmap _playerBitmap;
     private Bitmap _bulletBitmap;
     private int _id;
@@ -27,6 +29,8 @@ public class Player implements IDamageableSprite {
         _rotation = 0;
         _position = new Point(0,0);
         _bounds = new Rect(0,0,0,0);
+        _hitBox = new Rect(0,0,0,0);
+        _touchBox = new Rect(0,0,0,0);
 
         _playerBitmap = null;
         _bulletBitmap = null;
@@ -87,6 +91,42 @@ public class Player implements IDamageableSprite {
         Rect absoluteBounds = new Rect(_bounds);
         absoluteBounds.offset(_position.x, _position.y);
         return absoluteBounds;
+    }
+
+    public Rect getHitBox() {
+        return _hitBox;
+    }
+
+    public Rect getAbsoluteHitBox() {
+        Rect absoluteBounds = new Rect(_hitBox);
+        absoluteBounds.offset(_position.x, _position.y);
+        return absoluteBounds;
+    }
+
+    public void setHitBox(Rect hitBox) {
+        _hitBox = hitBox;
+    }
+
+    public Rect getTouchBox() {
+        return _touchBox;
+    }
+
+    public Rect getAbsoluteTouchBox() {
+        Rect absoluteBounds = new Rect(_touchBox);
+        absoluteBounds.offset(_position.x, _position.y);
+        return absoluteBounds;
+    }
+
+    public Rect getPaddedAbsoluteTouchBox(int padding) {
+        //use this for player click calculations
+        //so it will create a more generous click boundary
+        Rect bounds = getAbsoluteTouchBox();
+        Rect paddedBounds = new Rect(bounds.left - padding, bounds.top - padding, bounds.right + padding, bounds.bottom + padding);
+        return paddedBounds;
+    }
+
+    public void setTouchBox(Rect touchBox) {
+        _touchBox = touchBox;
     }
 
     @Override
@@ -202,13 +242,5 @@ public class Player implements IDamageableSprite {
         Random r = new Random();
         int damage = _minBulletDamage + r.nextInt(diff);
         return damage;
-    }
-
-    public Rect getPaddedAbsoluteBounds(int padding) {
-        //use this for player click calculations
-        //so it will create a more generous click boundary
-        Rect bounds = getAbsoluteBounds();
-        Rect paddedBounds = new Rect(bounds.left - padding, bounds.top - padding, bounds.right + padding, bounds.bottom + padding);
-        return paddedBounds;
     }
 }

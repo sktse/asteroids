@@ -38,6 +38,15 @@ public class SpriteFactory {
         player.setMinBulletDamage(minBulletDamage);
         player.setMaxBulletDamage(maxBulletDamage);
 
+        Rect bounds = player.getBounds();
+        //hit box is a square touching the top of the image
+        Rect hitBox = new Rect(bounds.left, bounds.top, bounds.right, bounds.top + bounds.width());
+        player.setHitBox(hitBox);
+
+        //touch box is a square touching the bottom of the image
+        Rect touchBox = new Rect(bounds.left, bounds.bottom - bounds.width(), bounds.right, bounds.bottom);
+        player.setTouchBox(touchBox);
+
         int id = getUniqueId();
         player.setId(id);
 
@@ -59,6 +68,31 @@ public class SpriteFactory {
         bullet.setId(id);
 
         return bullet;
+    }
+
+    public static Bitmap getAsteroidBitmap(AsteroidSize size) {
+        Bitmap bitmap;
+        switch(size) {
+            case SIZE_20:
+                bitmap = BitmapFactory.decodeResource(
+                        AsteroidsApplication.getInstance().getResources(), R.drawable.box020);
+                break;
+            case SIZE_50:
+                bitmap = BitmapFactory.decodeResource(
+                        AsteroidsApplication.getInstance().getResources(), R.drawable.box050);
+                break;
+            case SIZE_80:
+                bitmap = BitmapFactory.decodeResource(
+                        AsteroidsApplication.getInstance().getResources(), R.drawable.box080);
+                break;
+            case SIZE_100:
+            default:
+                bitmap = BitmapFactory.decodeResource(
+                        AsteroidsApplication.getInstance().getResources(), R.drawable.box100);
+                break;
+
+        }
+        return bitmap;
     }
 
     public static Asteroid createRandomAsteroid(AsteroidSize size, Point position) {

@@ -98,13 +98,9 @@ public class GameBoard extends View {
 
     public synchronized void initializeGame(
             Point playerPosition, int tickNumber, int minBulletDamage, int maxBulletDamage,
-            ICreateAsteroidCommand command, Rect creationBounds) {
+            ICreateAsteroidCommand command, Rect creationBounds, Bitmap shipBitmap, Bitmap bulletBitmap) {
         _sprites.clear();
         _bullets.clear();
-
-        Bitmap shipBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.triangle30);
-        Bitmap bulletBitmap = BitmapFactory.decodeResource(
-                AsteroidsApplication.getInstance().getResources(), R.drawable.bullet);
 
         Player player = SpriteFactory.createPlayer(
                 shipBitmap, bulletBitmap, playerPosition,
@@ -122,11 +118,7 @@ public class GameBoard extends View {
         }
     }
 
-    public synchronized void continueGame(Point playerPosition, int tickNumber, int minBulletDamage, int maxBulletDamage) {
-        Bitmap shipBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.triangle30);
-        Bitmap bulletBitmap = BitmapFactory.decodeResource(
-                AsteroidsApplication.getInstance().getResources(), R.drawable.bullet);
-
+    public synchronized void continueGame(Point playerPosition, int tickNumber, int minBulletDamage, int maxBulletDamage, Bitmap shipBitmap, Bitmap bulletBitmap) {
         Player player = SpriteFactory.createPlayer(
                 shipBitmap, bulletBitmap, playerPosition,
                 tickNumber, minBulletDamage, maxBulletDamage);
@@ -146,8 +138,8 @@ public class GameBoard extends View {
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
             Point clickPoint = new Point((int) event.getX(), (int) event.getY());
-            if (player.getPaddedAbsoluteBounds(PLAYER_CLICK_PADDING).contains(clickPoint.x, clickPoint.y)) {
-                Point playerPoint = new Point(player.getAbsoluteBounds().left, player.getAbsoluteBounds().top);
+            if (player.getPaddedAbsoluteTouchBox(PLAYER_CLICK_PADDING).contains(clickPoint.x, clickPoint.y)) {
+                Point playerPoint = player.getPosition();
                 _spriteClickDelta = new Point(clickPoint.x - playerPoint.x, clickPoint.y - playerPoint.y);
                 player.setEnabled(true);
             }
@@ -323,9 +315,11 @@ public class GameBoard extends View {
             if (sprite.getPosition().x >= 0) {
                 m.reset();
                 m.postTranslate((float) (sprite.getPosition().x), (float) (sprite.getPosition().y));
-                m.postRotate(sprite.getRotation(),
-                        (float) (sprite.getPosition().x + sprite.getBounds().width() / 2.0),
-                        (float) (sprite.getPosition().y + sprite.getBounds().width() / 2.0));
+                if (sprite.getRotation() != 0) {
+                    m.postRotate(sprite.getRotation(),
+                            (float) (sprite.getPosition().x + sprite.getBounds().width() / 2.0),
+                            (float) (sprite.getPosition().y + sprite.getBounds().width() / 2.0));
+                }
                 canvas.drawBitmap(sprite.getBitmap(), m, null);
 
                 //detect clipping and rolling over the drawing
@@ -340,10 +334,12 @@ public class GameBoard extends View {
 
                     m.reset();
                     m.postTranslate((float) (clippedX), (float) (clippedY));
-                    m.postRotate(sprite.getRotation(),
-                            (float) (clippedX + sprite.getBounds().width() / 2.0),
-                            (float) (clippedY + sprite.getBounds().width() / 2.0));
-                    canvas.drawBitmap(sprite.getBitmap(), m, null);
+                    if (sprite.getRotation() != 0) {
+                        m.postRotate(sprite.getRotation(),
+                                (float) (clippedX + sprite.getBounds().width() / 2.0),
+                                (float) (clippedY + sprite.getBounds().width() / 2.0));
+                        canvas.drawBitmap(sprite.getBitmap(), m, null);
+                    }
                 }
 
                 //TODO fix scenario where the sprite clips all 4 corners

@@ -1,5 +1,7 @@
 package com.stephentse.asteroids;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -45,10 +47,17 @@ public class GameActivity extends FragmentActivity {
     private TextView _multiplierTextView;
     private List<FrameLayout> _lifeLayouts;
 
+    private Bitmap _shipBitmap;
+    private Bitmap _bulletBitmap;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        _shipBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player30);
+        _bulletBitmap = BitmapFactory.decodeResource(
+                AsteroidsApplication.getInstance().getResources(), R.drawable.bullet);
 
         _lifeLayouts = new ArrayList<FrameLayout>();
         _lifeLayouts.add((FrameLayout) findViewById(R.id.layoutLife1));
@@ -142,7 +151,7 @@ public class GameActivity extends FragmentActivity {
 
         GameBoard gameBoard = (GameBoard)findViewById(R.id.gameBoard);
         gameBoard.resetStarField();
-        gameBoard.initializeGame(playerPosition, 15, 10, 20, createLargeCommand, creationBounds);
+        gameBoard.initializeGame(playerPosition, 15, 10, 20, createLargeCommand, creationBounds, _shipBitmap, _bulletBitmap);
 
         _score = 0;
         _multiplier = 1;
@@ -252,7 +261,7 @@ public class GameActivity extends FragmentActivity {
 
 
             GameBoard gameBoard = (GameBoard)findViewById(R.id.gameBoard);
-            gameBoard.continueGame(playerPosition, 15, 10, 20);
+            gameBoard.continueGame(playerPosition, 15, 10, 20, _shipBitmap, _bulletBitmap);
         }
     };
 

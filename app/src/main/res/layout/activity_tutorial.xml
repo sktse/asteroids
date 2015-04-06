@@ -295,12 +295,14 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="0.8"></FrameLayout>
+                        android:layout_weight="9">
+
+                    </FrameLayout>
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.1">
+                        android:layout_weight="1">
 
                         <FrameLayout
                             android:layout_width="60dp"
@@ -332,7 +334,7 @@
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.1">
+                        android:layout_weight="1">
 
                         <FrameLayout
                             android:layout_width="2dp"
@@ -354,45 +356,146 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/layoutAsteroidsDetails">
 
                     <FrameLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="635px"
-                        android:id="@+id/layoutAsteroidTopPadding"></FrameLayout>
+                        android:layout_height="fill_parent"
+                        android:id="@+id/layoutAsteroidTopPadding"
+                        android:layout_weight="5"></FrameLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="5">
+
+                        <FrameLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/tutorial_line"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/layoutAsteroidTutorialLine"></FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="2dp"
+                            android:layout_height="5dp"
+                            android:background="@color/tutorial_line"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/layoutAsteroidPointerLine"
+                            android:layout_gravity="center_horizontal"></FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="@string/tutorial_asteroids"
+                            android:id="@+id/textViewTutorialAsteroid"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/layoutShipDetails">
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.9">
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="90dp"
+                            android:id="@+id/layoutLeftShipArea"
+                            android:layout_toLeftOf="@+id/layoutShipArea"
+                            android:layout_alignParentBottom="true">
+
+                            <FrameLayout
+                                android:layout_width="2dp"
+                                android:layout_height="15dp"
+                                android:background="@color/tutorial_line"
+                                android:layout_alignParentRight="true"></FrameLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="90dp"
+                            android:id="@+id/layoutShipArea"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true">
+
+                            <FrameLayout
+                                android:layout_width="60dp"
+                                android:layout_height="2dp"
+                                android:background="@color/tutorial_line"
+                                android:layout_alignParentRight="true"></FrameLayout>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="90dp"
+                            android:id="@+id/layoutRightShipArea"
+                            android:layout_toRightOf="@+id/layoutShipArea"
+                            android:layout_alignParentBottom="true">
+
+                            <FrameLayout
+                                android:layout_width="2dp"
+                                android:layout_height="30dp"
+                                android:background="@color/tutorial_line"></FrameLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="10dp"
+                                android:layout_height="fill_parent"
+                                android:id="@+id/layoutShipPointer">
+
+                                <RelativeLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="15dp">
+
+                                    <FrameLayout
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="2dp"
+                                        android:layout_alignParentBottom="true"
+                                        android:background="@color/tutorial_line"></FrameLayout>
+                                </RelativeLayout>
+
+                                <FrameLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="75dp"></FrameLayout>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="@string/tutorial_ship"
+                                android:id="@+id/textViewTutorialShip"
+                                android:layout_toRightOf="@+id/layoutShipPointer"
+                                android:layout_marginLeft="5dp" />
+                        </RelativeLayout>
+                    </RelativeLayout>
 
                     <FrameLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="2dp"
-                        android:layout_below="@+id/layoutAsteroidTopPadding"
-                        android:background="@color/tutorial_line"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:id="@+id/layoutAsteroidTutorialLine"></FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="2dp"
-                        android:layout_height="5dp"
-                        android:layout_below="@+id/layoutAsteroidTutorialLine"
-                        android:background="@color/tutorial_line"
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/layoutAsteroidPointerLine"></FrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/tutorial_asteroids"
-                        android:id="@+id/textViewTutorialAsteroid"
-                        android:layout_below="@+id/layoutAsteroidPointerLine"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp" />
-                </RelativeLayout>
+                        android:layout_height="0dp"
+                        android:layout_weight="0.1"></FrameLayout>
+                </LinearLayout>
 
             </RelativeLayout>
 

@@ -6,10 +6,12 @@
     <string name="multiplier_format">x%.1f</string>
     <string name="high_score_connection_error">Failed to connect! Please try again.</string>
     <string name="high_score_empty">Please enter your name!</string>
+    <string name="high_score_fetch_error_line1">Failed to get high scores!</string>
+    <string name="high_score_fetch_error_line2">Please try again.</string>
     <string name="tutorial_lives">This is the number of lives you have remaining</string>
     <string name="tutorial_score">This is your total score</string>
     <string name="tutorial_multiplier">This is your score multiplier\nIt increases every time you destroy an asteroid</string>
-    <string name="tutorial_player">This square is where you control your ship\nPress + hold to move around and fire at asteroids</string>
+    <string name="tutorial_player">The square is where you control your ship\nAsteroids will pass through it\nPress + hold to move around and fire at asteroids</string>
     <string name="tutorial_asteroids">Destroy the asteroids for points. A colliding asteroid will destroy you if are pressing + holding your ship.\nOtherwise, asteroids will leave you unharmed and pass through you.</string>
     <string name="tutorial_ship">The top half is your ship\nDo not let asteroids touch it!</string>
 </resources>

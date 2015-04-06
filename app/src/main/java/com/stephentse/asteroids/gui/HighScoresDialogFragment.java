@@ -35,6 +35,7 @@ public class HighScoresDialogFragment extends DialogFragment {
 
     private View _progressLayout;
     private View _scoresLayout;
+    private View _errorLayout;
     private TableLayout _scoresTableLayout;
     private Typeface _squareTypeface;
     private Typeface _spvTypeface;
@@ -75,11 +76,21 @@ public class HighScoresDialogFragment extends DialogFragment {
         TextView titleTextView = (TextView)dialogView.findViewById(R.id.textViewTitle);
         titleTextView.setTypeface(_spvTypeface);
 
+        Typeface typeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.BASIC, getActivity().getAssets());
+        TextView highScoreErrorTextViewLine1 = (TextView)dialogView.findViewById(R.id.textViewHighScoreErrorLine1);
+        highScoreErrorTextViewLine1.setTypeface(typeface);
+
+        TextView highScoreErrorTextViewLine2 = (TextView)dialogView.findViewById(R.id.textViewHighScoreErrorLine2);
+        highScoreErrorTextViewLine2.setTypeface(typeface);
+
         _progressLayout = dialogView.findViewById(R.id.layoutProgress);
         _progressLayout.setVisibility(View.VISIBLE);
 
         _scoresLayout = dialogView.findViewById(R.id.layoutScores);
         _scoresLayout.setVisibility(View.GONE);
+
+        _errorLayout = dialogView.findViewById(R.id.layoutError);
+        _errorLayout.setVisibility(View.GONE);
 
         _scoresTableLayout = (TableLayout)dialogView.findViewById(R.id.tableLayoutScores);
 
@@ -111,16 +122,23 @@ public class HighScoresDialogFragment extends DialogFragment {
 
                                 _progressLayout.setVisibility(View.GONE);
                                 _scoresLayout.setVisibility(View.VISIBLE);
+                                _errorLayout.setVisibility(View.GONE);
                             }
 
                             @Override
                             public void onFailure(Throwable e, JSONObject response) {
                                 CrashlyticsWrapper.logException("Failed to high score from server", response, e);
+                                _progressLayout.setVisibility(View.GONE);
+                                _scoresLayout.setVisibility(View.GONE);
+                                _errorLayout.setVisibility(View.VISIBLE);
                             }
 
                             @Override
                             public void onFailure(Throwable e) {
                                 CrashlyticsWrapper.logException("Failed to high score from server", e);
+                                _progressLayout.setVisibility(View.GONE);
+                                _scoresLayout.setVisibility(View.GONE);
+                                _errorLayout.setVisibility(View.VISIBLE);
                             }
                         }
                 ));

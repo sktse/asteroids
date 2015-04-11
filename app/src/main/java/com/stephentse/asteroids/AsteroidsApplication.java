@@ -3,11 +3,9 @@ package com.stephentse.asteroids;
 import android.app.Application;
 import android.preference.PreferenceManager;
 
-import com.crashlytics.android.Crashlytics;
 import com.stephentse.asteroids.api.crashlytics.CrashlyticsWrapper;
 import com.stephentse.asteroids.system.GameStatus;
 import com.stephentse.asteroids.system.Settings;
-import io.fabric.sdk.android.Fabric;
 
 public class AsteroidsApplication extends Application {
 
@@ -28,7 +26,7 @@ public class AsteroidsApplication extends Application {
         if (crashlyticsKey != null && !crashlyticsKey.isEmpty() && !BuildConfig.DEBUG) {
             //if we have a crashlytics key, then initialize it
             //when Crashlytics starts, it will log an informational under the 'Fabric' key
-            Fabric.with(this, new Crashlytics());
+            CrashlyticsWrapper.initialize(this);
         }
 
         if (_settings == null) {

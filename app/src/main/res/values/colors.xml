@@ -7,8 +7,11 @@
     <color name="dark_blue">#ff0a0a8c</color>
     <color name="light_blue">#ff42d7f4</color>
     <color name="darkest_gray">#ff282828</color>
+    <color name="light_gray">#ff6c6c6c</color>
     <color name="bright_green">#ff0fff00</color>
     <color name="purple">#ff7c31ad</color>
+    <color name="pinkish">#ffad008c</color>
+    <color name="yellow">#ffffea00</color>
     <color name="tutorial_line">#ffffea00</color>
 
 </resources>

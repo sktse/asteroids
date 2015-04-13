@@ -18,6 +18,8 @@ import com.stephentse.asteroids.model.SpriteFactory;
 import com.stephentse.asteroids.model.commands.CreateAsteroidCommand;
 import com.stephentse.asteroids.system.Settings;
 import com.stephentse.asteroids.system.SettingsWrapper;
+import com.stephentse.asteroids.system.gameDifficulty.GameDifficulty;
+import com.stephentse.asteroids.system.gameDifficulty.GameDifficultyFactory;
 import com.stephentse.asteroids.util.TypefaceFactory;
 
 public class MainActivity extends FragmentActivity {
@@ -33,8 +35,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_main);
 
         Typeface forcedSquareTypeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.FORCED_SQUARE, getAssets());
@@ -49,7 +49,12 @@ public class MainActivity extends FragmentActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GameDifficulty.DifficultyType type = SettingsWrapper.getGameDifficulty();
+                GameDifficulty difficulty = GameDifficultyFactory.getDifficulty(type);
+
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                intent.putExtra(GameDifficulty.FRAME_RATE_KEY, difficulty.getFrameRate());
+                intent.putExtra(GameDifficulty.MULTIPLIER_KEY, difficulty.getDifficultyMultiplier());
                 startActivity(intent);
             }
         });
@@ -60,6 +65,16 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button optionsButton = (Button)findViewById(R.id.buttonOptions);
+        optionsButton.setTypeface(basicTypeface);
+        optionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OptionsActivity.class);
                 startActivity(intent);
             }
         });

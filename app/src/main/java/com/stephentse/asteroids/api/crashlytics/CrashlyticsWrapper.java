@@ -45,6 +45,7 @@ public class CrashlyticsWrapper {
         else {
             Log.e(LOG_GROUP, message);
             Log.e(LOG_GROUP, e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -59,6 +60,7 @@ public class CrashlyticsWrapper {
             Log.e(LOG_GROUP, message);
             Log.e(LOG_GROUP, responseString);
             Log.e(LOG_GROUP, e.toString());
+            e.printStackTrace();
         }
     }
 }

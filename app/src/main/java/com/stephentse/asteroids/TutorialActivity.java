@@ -54,7 +54,7 @@ public class TutorialActivity extends FragmentActivity {
         _scoreTextView = (TextView)findViewById(R.id.textViewScore);
         _scoreTextView.setTypeface(typeface);
 
-        _multiplierTextView = (TextView)findViewById(R.id.textViewMultiplier);
+        _multiplierTextView = (TextView)findViewById(R.id.textViewMultiplierTitle);
         _multiplierTextView.setTypeface(typeface);
 
         Typeface tutorialTypeface = TypefaceFactory.getTypeFace(TypefaceFactory.TypefaceName.FORCED_SQUARE, getAssets());

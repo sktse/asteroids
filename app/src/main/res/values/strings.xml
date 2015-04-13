@@ -14,4 +14,11 @@
     <string name="tutorial_player">The square is where you control your ship\nAsteroids will pass through it\nPress + hold to move around and fire at asteroids</string>
     <string name="tutorial_asteroids">Destroy the asteroids for points. A colliding asteroid will destroy you if are pressing + holding your ship.\nOtherwise, asteroids will leave you unharmed and pass through you.</string>
     <string name="tutorial_ship">The top half is your ship\nDo not let asteroids touch it!</string>
+
+    <string-array name="game_difficulties">
+        <item>Very Slow</item>
+        <item>Slow</item>
+        <item>Normal</item>
+        <item>Fast</item>
+    </string-array>
 </resources>

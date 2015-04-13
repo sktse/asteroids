@@ -1,6 +1,7 @@
 package com.stephentse.asteroids.system;
 
 import com.stephentse.asteroids.AsteroidsApplication;
+import com.stephentse.asteroids.system.gameDifficulty.GameDifficulty;
 
 public class SettingsWrapper {
 
@@ -23,5 +24,15 @@ public class SettingsWrapper {
         long currentHighScore = getHighScore();
 
         return highScore > currentHighScore;
+    }
+
+    public static GameDifficulty.DifficultyType getGameDifficulty() {
+        Settings settings = AsteroidsApplication.getSettings();
+        return GameDifficulty.DifficultyType.valueOf(settings.getDifficulty());
+    }
+
+    public static void setGameDifficulty(GameDifficulty.DifficultyType type) {
+        Settings settings = AsteroidsApplication.getSettings();
+        settings.setDifficulty(type.name());
     }
 }

@@ -27,6 +27,11 @@
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden">
         </activity>
+        <activity
+            android:name=".OptionsActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="bd9efcc36febeb7c3de704af1e9e001dea11c20b" />

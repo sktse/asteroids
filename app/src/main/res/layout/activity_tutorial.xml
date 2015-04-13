@@ -71,7 +71,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
                     android:typeface="monospace"
-                    android:layout_toLeftOf="@+id/textViewMultiplier"
+                    android:layout_toLeftOf="@+id/textViewMultiplierTitle"
                     android:paddingBottom="3dp" />
 
                 <TextView
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="x1.0"
-                    android:id="@+id/textViewMultiplier"
+                    android:id="@+id/textViewMultiplierTitle"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
@@ -157,9 +157,9 @@
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewMultiplier"
-                    android:layout_alignRight="@+id/textViewMultiplier"
-                    android:layout_alignLeft="@+id/textViewMultiplier"
+                    android:layout_below="@+id/textViewMultiplierTitle"
+                    android:layout_alignRight="@+id/textViewMultiplierTitle"
+                    android:layout_alignLeft="@+id/textViewMultiplierTitle"
                     android:id="@+id/layoutMultiplierLine">
 
                     <FrameLayout

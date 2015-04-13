@@ -7,10 +7,12 @@ public class Settings {
     private static final String HIGH_SCORE = "Settings::_highScore";
     private static final String NAME = "Settings::_name";
     private static final String USER_ID = "Settings::_userId";
+    private static final String DIFFICULTY = "Settings::_difficulty";
 
     private long _highScore;
     private String _name;
     private String _userId;
+    private String _difficulty;
 
     // Storage and Listener
     private SharedPreferences _storage;
@@ -21,6 +23,7 @@ public class Settings {
         _highScore = _storage.getLong(HIGH_SCORE, 0);
         _name = _storage.getString(NAME, "you");
         _userId = _storage.getString(USER_ID, null);
+        _difficulty = _storage.getString(DIFFICULTY, "Normal");
     }
 
     public synchronized void setHighScore(long value) {
@@ -51,5 +54,15 @@ public class Settings {
 
     public synchronized String getUserId() {
         return _userId;
+    }
+
+    public synchronized void setDifficulty(String value) {
+        _difficulty = value;
+
+        _storage.edit().putString(DIFFICULTY, _difficulty).commit();
+    }
+
+    public synchronized  String getDifficulty() {
+        return _difficulty;
     }
 }

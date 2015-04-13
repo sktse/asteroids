@@ -23,6 +23,7 @@ import com.stephentse.asteroids.model.commands.CreateAsteroidCommand;
 import com.stephentse.asteroids.model.sprites.Asteroid;
 import com.stephentse.asteroids.model.sprites.ISprite;
 import com.stephentse.asteroids.system.SettingsWrapper;
+import com.stephentse.asteroids.system.gameDifficulty.GameDifficulty;
 import com.stephentse.asteroids.util.TypefaceFactory;
 
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ public class GameActivity extends FragmentActivity {
     private static final String PAUSED_FRAGMENT_NAME = "PAUSED_FRAGMENT_NAME";
 
     //Divide the frame by 1000 to calculate how many times per second the screen will update.
-    private static final int FRAME_RATE = 20; //50 frames per second
+    private int _frameRate = 50;
+    private float _difficultyMultiplier = 1.0f;
+
     private static final int PLAYER_RESPAWN_DELAY = 1000;
 
     private long _score;
@@ -55,6 +58,9 @@ public class GameActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        _frameRate = getIntent().getIntExtra(GameDifficulty.FRAME_RATE_KEY, GameDifficulty.FRAME_RATE_DEFAULT);
+        _difficultyMultiplier = getIntent().getFloatExtra(GameDifficulty.MULTIPLIER_KEY, GameDifficulty.MULTIPLIER_DEFAULT);
+
         _shipBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player30);
         _bulletBitmap = BitmapFactory.decodeResource(
                 AsteroidsApplication.getInstance().getResources(), R.drawable.bullet);
@@ -68,7 +74,7 @@ public class GameActivity extends FragmentActivity {
         _scoreTextView = (TextView) findViewById(R.id.textViewScore);
         _scoreTextView.setTypeface(typeface);
 
-        _multiplierTextView = (TextView) findViewById(R.id.textViewMultiplier);
+        _multiplierTextView = (TextView) findViewById(R.id.textViewMultiplierTitle);
         _multiplierTextView.setTypeface(typeface);
 
         final GameBoard gameBoard = (GameBoard)findViewById(R.id.gameBoard);
@@ -79,7 +85,7 @@ public class GameActivity extends FragmentActivity {
                 switch(event) {
                     case GameEvent.ASTEROID_DESTROYED:
                         Asteroid asteroid = (Asteroid) sprite;
-                        _score += (asteroid.getPoints() * _multiplier);
+                        _score += (asteroid.getPoints() * _multiplier * _difficultyMultiplier);
                         _multiplier += 0.1;
 
                         _scoreTextView.setText(Long.toString(_score));
@@ -167,7 +173,7 @@ public class GameActivity extends FragmentActivity {
 
         AsteroidsApplication.getInstance().getGameStatus().resumeGame();
         _frame.removeCallbacks(frameUpdate);
-        _frame.postDelayed(frameUpdate, FRAME_RATE);
+        _frame.postDelayed(frameUpdate, _frameRate);
     }
 
     @Override
@@ -176,7 +182,7 @@ public class GameActivity extends FragmentActivity {
 
         if (!AsteroidsApplication.getInstance().getGameStatus().isPaused()) {
             _frame.removeCallbacks(frameUpdate);
-            _frame.postDelayed(frameUpdate, FRAME_RATE);
+            _frame.postDelayed(frameUpdate, _frameRate);
         }
     }
 
@@ -207,13 +213,13 @@ public class GameActivity extends FragmentActivity {
                         fragment.dismiss();
                         initializeGame();
                         _frame.removeCallbacks(frameUpdate);
-                        _frame.postDelayed(frameUpdate, FRAME_RATE);
+                        _frame.postDelayed(frameUpdate, _frameRate);
                         break;
                     case PausedDialogFragment.RESUME_EVENT:
                         fragment.dismiss();
                         AsteroidsApplication.getInstance().getGameStatus().resumeGame();
                         _frame.removeCallbacks(frameUpdate);
-                        _frame.postDelayed(frameUpdate, FRAME_RATE);
+                        _frame.postDelayed(frameUpdate, _frameRate);
                         break;
                     case PausedDialogFragment.QUIT_EVENT:
                         fragment.dismiss();
@@ -248,7 +254,7 @@ public class GameActivity extends FragmentActivity {
             GameBoard gameBoard = (GameBoard)findViewById(R.id.gameBoard);
             gameBoard.tick();
             gameBoard.invalidate();
-            _frame.postDelayed(frameUpdate, FRAME_RATE);
+            _frame.postDelayed(frameUpdate, _frameRate);
         }
     };
 

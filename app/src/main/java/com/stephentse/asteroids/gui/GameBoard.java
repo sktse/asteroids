@@ -2,7 +2,6 @@ package com.stephentse.asteroids.gui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.stephentse.asteroids.AsteroidsApplication;
-import com.stephentse.asteroids.R;
 import com.stephentse.asteroids.model.SpriteFactory;
 import com.stephentse.asteroids.model.commands.ICreateAsteroidCommand;
 import com.stephentse.asteroids.model.sprites.Asteroid;
@@ -40,10 +38,10 @@ import java.util.Random;
 public class GameBoard extends View {
 
     private Paint p;
-    private List<Point> starField = null;
-    private int starAlpha = 80;
-    private int starFade = 2;
-    private static final int NUM_OF_STARS = 25;
+    private List<Point> _starField;
+    private int _starAlpha;
+    private int _starFade;
+    private int _numberOfStars;
 
     private static final int PLAYER_CLICK_PADDING = 20;
 
@@ -66,6 +64,12 @@ public class GameBoard extends View {
         super(context, aSet);
         m = new Matrix();
         p = new Paint();
+
+        _starField = null;
+
+        _starAlpha = 80;
+        _starFade = 2;
+        _numberOfStars = 25;
 
         _playerId = -1;
         _spriteClickDelta = new Point(0, 0);
@@ -93,7 +97,16 @@ public class GameBoard extends View {
     }
 
     public synchronized void resetStarField() {
-        starField = null;
+        _starField = null;
+    }
+
+    public synchronized void setNumberOfStars(int numberOfStars) {
+        _numberOfStars = numberOfStars;
+        resetStarField();
+    }
+
+    public synchronized int getNumberOfStars() {
+        return _numberOfStars;
     }
 
     public synchronized void initializeGame(
@@ -166,12 +179,12 @@ public class GameBoard extends View {
     }
 
     private void initializeStars(int maxX, int maxY) {
-        starField = new ArrayList<Point>();
-        for (int i = 0; i < NUM_OF_STARS; i++) {
+        _starField = new ArrayList<Point>();
+        for (int i = 0; i < _numberOfStars; i++) {
             Random r = new Random();
             int x = r.nextInt(maxX-5+1)+5;
             int y = r.nextInt(maxY-5+1)+5;
-            starField.add(new Point (x,y));
+            _starField.add(new Point(x, y));
         }
     }
 
@@ -290,19 +303,19 @@ public class GameBoard extends View {
         p.setStrokeWidth(1);
         canvas.drawRect(0, 0, getWidth(), getHeight(), p);
 
-        if (starField == null) {
+        if (_starField == null) {
             initializeStars(canvas.getWidth(), canvas.getHeight());
         }
         p.setColor(Color.CYAN);
-        p.setAlpha(starAlpha += starFade);
+        p.setAlpha(_starAlpha += _starFade);
 
-        if (starAlpha >= 252 || starAlpha <= 80) {
-            starFade = starFade *- 1;
+        if (_starAlpha >= 252 || _starAlpha <= 80) {
+            _starFade = _starFade *- 1;
         }
         p.setStrokeWidth(5);
 
-        for (int i = 0; i < NUM_OF_STARS; i++) {
-            canvas.drawPoint(starField.get(i).x, starField.get(i).y, p);
+        for (int i = 0; i < _numberOfStars; i++) {
+            canvas.drawPoint(_starField.get(i).x, _starField.get(i).y, p);
         }
 
         //Now we draw our sprites.  Items drawn in this function are stacked.

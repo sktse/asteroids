@@ -69,9 +69,17 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Options"
+                        android:id="@+id/buttonOptions"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/buttonHelp" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="High Scores"
                         android:id="@+id/buttonScore"
-                        android:layout_below="@+id/buttonHelp"
+                        android:layout_below="@+id/buttonOptions"
                         android:layout_marginTop="10dp" />
 
                 </RelativeLayout>

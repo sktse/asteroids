@@ -9,6 +9,12 @@ import com.loopj.android.http.RequestParams;
 
 public class OpenshiftServerApi {
 
+    //Connection properties
+    //Need to set retries and connection timeouts because the free version of Openshift
+    //will throw "503 Service Unavailable" very often
+    private static final int MAX_RETRIES = 10;   //10 retries
+    private static final int CONNECTION_TIMEOUT = 60000;  //60 seconds for the whole connection
+
     private static AsyncHttpClient asyncClient = new AsyncHttpClient();
     private HandlerThread _handlerThread;
     private Handler _handler;
@@ -47,7 +53,11 @@ public class OpenshiftServerApi {
 
 
     private OpenshiftServerApi() {
+        //loopj does not always correctly set user agent correctly
         asyncClient.setUserAgent("Android Asynchronous Http Client/1.4.5 (http://loopj.com/android-async-http/)");
+
+        //set retries and timeout because free Openshift will throw "503 Service Unavailable" frequently
+        asyncClient.setMaxRetriesAndTimeout(MAX_RETRIES, CONNECTION_TIMEOUT);
         _handlerThread = new HandlerThread("OpenshiftServerApi", android.os.Process.THREAD_PRIORITY_BACKGROUND);
         _handlerThread.start();
         _handler = new Handler(_handlerThread.getLooper());

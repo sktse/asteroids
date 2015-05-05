@@ -84,6 +84,8 @@ public class GameActivity extends FragmentActivity {
                 String multiplierString = getResources().getString(R.string.multiplier_format);
                 switch(event) {
                     case GameEvent.ASTEROID_DESTROYED:
+                        //An asteroid has been destroyed
+                        //So award the points and increment the necessary multipliers
                         Asteroid asteroid = (Asteroid) sprite;
                         _score += (asteroid.getPoints() * _multiplier * _difficultyMultiplier);
                         _multiplier += 0.1;
@@ -92,13 +94,16 @@ public class GameActivity extends FragmentActivity {
                         _multiplierTextView.setText(String.format(multiplierString, _multiplier));
                         break;
                     case GameEvent.PLAYER_REKTD:
+                        //Player has lost a life
                         _lives--;
                         updatePlayerLives();
                         if (_lives > 0) {
+                            //Player has another life, spawn another player ship
                             _multiplier = 1.0f;
                             _multiplierTextView.setText(String.format(multiplierString, _multiplier));
                             _frame.postDelayed(playerRespawn, PLAYER_RESPAWN_DELAY);
                         } else {
+                            //Player has no more lives. Game over!
                             AsteroidsApplication.getInstance().getGameStatus().pauseGame();
                             String name = AsteroidsApplication.getSettings().getName();
                             final GameOverDialogFragment fragment = new GameOverDialogFragment();
@@ -119,6 +124,7 @@ public class GameActivity extends FragmentActivity {
                         }
                         break;
                     case GameEvent.GAME_COMPLETE:
+                        //Player has destroyed all asteroids. They win!
                         AsteroidsApplication.getInstance().getGameStatus().pauseGame();
                         String name = AsteroidsApplication.getSettings().getName();
                         final GameOverDialogFragment fragment = new GameOverDialogFragment();
@@ -138,7 +144,7 @@ public class GameActivity extends FragmentActivity {
                         fragment.show(getFragmentManager(), WINNER_FRAGMENT_NAME);
                         break;
                     default:
-                        throw new IllegalArgumentException("Unrecoginzed GameEvent value: " + event);
+                        throw new IllegalArgumentException("Unrecognized GameEvent value: " + event);
                 }
             }
         });
@@ -210,18 +216,21 @@ public class GameActivity extends FragmentActivity {
             public void onDismiss(int event) {
                 switch(event) {
                     case PausedDialogFragment.RESET_EVENT:
+                        //Player has pressed restart game
                         fragment.dismiss();
                         initializeGame();
                         _frame.removeCallbacks(frameUpdate);
                         _frame.postDelayed(frameUpdate, _frameRate);
                         break;
                     case PausedDialogFragment.RESUME_EVENT:
+                        //Player has resumed the game
                         fragment.dismiss();
                         AsteroidsApplication.getInstance().getGameStatus().resumeGame();
                         _frame.removeCallbacks(frameUpdate);
                         _frame.postDelayed(frameUpdate, _frameRate);
                         break;
                     case PausedDialogFragment.QUIT_EVENT:
+                        //Player has quit the game entirely
                         fragment.dismiss();
                         _frame.removeCallbacks(frameUpdate);
                         GameActivity.this.finish();

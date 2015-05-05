@@ -4,6 +4,7 @@ import android.app.Application;
 import android.preference.PreferenceManager;
 
 import com.stephentse.asteroids.api.crashlytics.CrashlyticsWrapper;
+import com.stephentse.asteroids.api.newrelic.NewRelicWrapper;
 import com.stephentse.asteroids.system.GameStatus;
 import com.stephentse.asteroids.system.Settings;
 
@@ -28,6 +29,9 @@ public class AsteroidsApplication extends Application {
             //when Crashlytics starts, it will log an informational under the 'Fabric' key
             CrashlyticsWrapper.initialize(this);
         }
+
+        //initialize general metrics tracking
+        NewRelicWrapper.initialize(this);
 
         if (_settings == null) {
             _settings = new Settings(PreferenceManager.getDefaultSharedPreferences(this));

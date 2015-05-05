@@ -206,6 +206,7 @@ public class GameBoard extends View {
         if (!_isLayoutComplete) {
             return;
         }
+        tickStarAlpha();
 
         AsteroidsApplication.getInstance().getGameStatus().incrementTickCount();
         TranslationStrategyFactory translationStrategyFactory = getTranslationStrategyFactory();
@@ -284,6 +285,18 @@ public class GameBoard extends View {
         }
     }
 
+    public void setStarAlpha(int alpha) {
+        _starAlpha = alpha;
+    }
+
+    private void tickStarAlpha() {
+        _starAlpha += _starFade;
+
+        if (_starAlpha > 252 || _starAlpha < 80) {
+            _starFade = _starFade *- 1;
+        }
+    }
+
     private boolean isWinningScenario() {
         if (_sprites.size() == 1) {
             List<ISprite> remainingSprites = new ArrayList<ISprite>(_sprites.values());
@@ -307,11 +320,7 @@ public class GameBoard extends View {
             initializeStars(canvas.getWidth(), canvas.getHeight());
         }
         p.setColor(Color.CYAN);
-        p.setAlpha(_starAlpha += _starFade);
-
-        if (_starAlpha >= 252 || _starAlpha <= 80) {
-            _starFade = _starFade *- 1;
-        }
+        p.setAlpha(_starAlpha);
         p.setStrokeWidth(5);
 
         for (int i = 0; i < _numberOfStars; i++) {

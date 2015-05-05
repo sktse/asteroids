@@ -115,11 +115,20 @@ public class OptionsActivity extends FragmentActivity {
     }
 
     private void initialize() {
+        int alpha = getRandomStarAlpha();
         _gameBoard.setNumberOfStars(100);
+        _gameBoard.setStarAlpha(alpha);
+        _gameBoard.invalidate();
 
         GameDifficulty.DifficultyType type = SettingsWrapper.getGameDifficulty();
         int index = getIndexOfDifficultyType(type);
         _difficultySpinner.setSelection(index);
+    }
+
+    private int getRandomStarAlpha() {
+        //get an integer between 80 and 252 (difference of 172)
+        int alpha = 80 + (int) (Math.random() * 172);
+        return alpha;
     }
 
     private int getIndexOfDifficultyType(GameDifficulty.DifficultyType type) {
